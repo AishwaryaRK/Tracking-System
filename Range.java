@@ -1,8 +1,5 @@
 package TrackingTable;
 
-/**
- * Created by test on 7/27/2015.
- */
 /* ----------------------------------------------------*
  * Represents the closed interval [a, b] where a, b    *
  * are integers.                                       *
@@ -41,6 +38,8 @@ public class Range {
         return this.lo < r.lo;
     }
 
+
+
     public enum Relation {
         SUBSET, SUPERSET, LESSOVERLAP, MOREOVERLAP, LESSDISJOINT, MOREDISJOINT, SAME;
     }
@@ -61,5 +60,14 @@ public class Range {
             return Relation.LESSOVERLAP;
         return Relation.MOREOVERLAP;
     }
+
+	@Override
+	public String toString() {
+		return "Range [lo=" + lo + ", hi=" + hi + "]";
+	}
+
+	public int compareTo(Range other) {
+		return Integer.compare(lo, other.lo);
+	}
 }
 

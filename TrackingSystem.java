@@ -114,4 +114,31 @@ public class TrackingSystem {
         return outputRecords;
     }
 
+    public void print() {
+        TrackingTableRecord trackingTableRecord = new TrackingTableRecord();
+        Range range = new Range(0,0);
+
+        for(int j=0; j<records.size();) {
+            int i = j+1;
+            int count =0;
+            range.lo = (records.get(i - 1).getRange().lo);
+            trackingTableRecord.setStatusCode(records.get(i - 1).getStatusCode());
+            trackingTableRecord.setTransferCode(records.get(i - 1).getTransferCode());
+            while((records.get(i-1).getRange().hi == records.get(i).getRange().lo + 1)
+                    && (records.get(i).getStatusCode() == records.get(i-1).getStatusCode())
+                    && (records.get(i).getTransferCode() == records.get(i-1).getTransferCode()))
+            {
+                range.hi = (records.get(i).getRange().hi);
+                trackingTableRecord.setRange(range);
+                count++;
+                i++;
+            }
+            System.out.println(trackingTableRecord.getRange().lo +" "+ trackingTableRecord.getRange().hi
+                    +" "+ trackingTableRecord.getStatusCode() +" "+ trackingTableRecord.getTransferCode());
+            j = j+count;
+
+        }
+    }
+    
 }
+
