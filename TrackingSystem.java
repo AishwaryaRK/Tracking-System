@@ -4,9 +4,15 @@ import java.util.List;
 
 public class TrackingSystem {
 
-    List<TrackingTableRecord> records;
+    private List<TrackingTableRecord> records;
 
-    public void compareTrackingRecords(TrackingTableRecord prev, TrackingTableRecord next){
+    public TrackingSystem(List<TrackingTableRecord> records) {
+		this.records = records;
+	}
+
+
+
+	public void compareTrackingRecords(TrackingTableRecord prev, TrackingTableRecord next){
         switch (prev.getRange().classify(next.getRange())){
             case SAME : break;
             case SUBSET : break;
@@ -18,4 +24,6 @@ public class TrackingSystem {
 
         }
     }
+    
+    
 }
