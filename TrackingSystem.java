@@ -20,11 +20,14 @@ public class TrackingSystem {
             return records;
         }
 
-        if (prev == null)
+        if (prev == null) {
+            System.out.println("is null");
             return records;
+        }
 
         List<TrackingTableRecord> updatedRecords = new ArrayList<TrackingTableRecord>();
-        switch (prev.getRange().classify(next.getRange())){
+        //System.out.println(next.getRange().classify(prev.getRange()));
+        switch (next.getRange().classify(prev.getRange())){
             case SAME :
                 for (TrackingTableRecord record: records)
                     if (record.equals(prev))
@@ -115,29 +118,59 @@ public class TrackingSystem {
     }
 
     public void print() {
-        TrackingTableRecord trackingTableRecord = new TrackingTableRecord();
+        System.out.println("*************Input  Starts****************");
+        for (TrackingTableRecord record: records)
+            System.out.println(record);
+        System.out.println("*************Input  Ends******************");
+        System.out.println("*************Output Starts****************");
+        for (TrackingTableRecord record: updateTable())
+            System.out.println(record);
+        System.out.println("*************Output Ends******************");
+
+        TrackingTableRecord finalRecord;
+        List<TrackingTableRecord> finalRecords = new ArrayList<TrackingTableRecord>();
         Range range = new Range(0,0);
 
-        for(int j=0; j<records.size();) {
+        for(int j=0; j<updateTable().size();) {
+            finalRecord = new TrackingTableRecord();
             int i = j+1;
             int count =0;
-            range.lo = (records.get(i - 1).getRange().lo);
-            trackingTableRecord.setStatusCode(records.get(i - 1).getStatusCode());
-            trackingTableRecord.setTransferCode(records.get(i - 1).getTransferCode());
-            while((records.get(i-1).getRange().hi == records.get(i).getRange().lo + 1)
-                    && (records.get(i).getStatusCode() == records.get(i-1).getStatusCode())
-                    && (records.get(i).getTransferCode() == records.get(i-1).getTransferCode()))
+            range.lo = (updateTable().get(i - 1).getRange().lo);
+            range.hi = updateTable().get(i - 1).getRange().hi;
+            finalRecord.setStatusCode(updateTable().get(i - 1).getStatusCode());
+            finalRecord.setTransferCode(updateTable().get(i - 1).getTransferCode());
+            finalRecord.setRange(range);
+            if(i == updateTable().size()){
+                System.out.println(finalRecord);
+                finalRecords.add(finalRecord);
+                break;
+            }
+            while((updateTable().get(i-1).getRange().hi == (updateTable().get(i).getRange().lo - 1))
+                    && (updateTable().get(i).getStatusCode() == updateTable().get(i-1).getStatusCode())
+                    && (updateTable().get(i).getTransferCode() == updateTable().get(i-1).getTransferCode()))
             {
-                range.hi = (records.get(i).getRange().hi);
-                trackingTableRecord.setRange(range);
+                range.hi = (updateTable().get(i).getRange().hi);
                 count++;
                 i++;
             }
-            System.out.println(trackingTableRecord.getRange().lo +" "+ trackingTableRecord.getRange().hi
-                    +" "+ trackingTableRecord.getStatusCode() +" "+ trackingTableRecord.getTransferCode());
-            j = j+count;
+            //System.out.println("count-"+count);
+            finalRecord.setRange(range);
+            System.out.println(finalRecord);
+            finalRecords.add(finalRecord);
+           /* System.out.println(finalRecord.getRange().lo + " " + finalRecord.getRange().hi
+                    + " " + finalRecord.getStatusCode() + " " + finalRecord.getTransferCode());*/
+            j = j+count+1;
 
         }
+
+
+        /*System.out.println("*************Final Starts****************");
+        System.out.println(finalRecords.size());
+        for (TrackingTableRecord record: finalRecords)
+            System.out.println(record);
+        System.out.println("*************Final Ends******************");
+*/
+
     }
     
 }

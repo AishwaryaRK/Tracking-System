@@ -17,7 +17,7 @@ public class TestClient {
 		String str = "1 10 A 1";
 		//System.out.println(str);
 
-		while ((str ) != null) {
+		/*while ((str ) != null) {
 			System.out.println(str);
 			String[] s = str.split(" ");
 			Range range = new Range(Integer.parseInt(s[0]), Integer.parseInt(s[1]));
@@ -26,8 +26,18 @@ public class TestClient {
 			TrackingTableRecord record = new TrackingTableRecord(range, statusCode, transferCode);
 			records.add(record);
 			str = null;
-		}
+		}*/
+
+		TrackingTableRecord record = new TrackingTableRecord(new Range(11,20), 'A', 1);
+		records.add(record);
+		record = new TrackingTableRecord(new Range(21,30), 'B', 1);
+		records.add(record);
+		record = new TrackingTableRecord(new Range(5,15), 'A', 2);
+		records.add(record);
+        record = new TrackingTableRecord(new Range(1,13), 'A', 2);
+        records.add(record);
 		TrackingSystem trackingSystem = new TrackingSystem(records);
+		trackingSystem.updateTable();
 		trackingSystem.print();
 	}
 
