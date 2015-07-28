@@ -6,4 +6,5 @@ Given a set of records with attributes: [starting tracking number, ending tracki
 
 API:
 updateTable() - update the table based on the input record
+
 printTable() - prints the table entries
